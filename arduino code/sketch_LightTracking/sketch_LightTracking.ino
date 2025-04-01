@@ -55,9 +55,9 @@ void loop() {
             int y = data.substring(commaIndex + 1).toInt();
 
             // set the speeds to the values send from serial. Map the speeds and make sure they are positive.
-            x = map(x, -1500, 1500, -50, 50);
+            x = map(x, -1500, 1500, -30, 30);
             //speedX = abs(speedX);
-            y = map(y, -1000, 1000, -50, 50);
+            y = map(y, -1000, 1000, -10, 10);
             //speedY = abs(speedY);
 
             // actually set the speeds.

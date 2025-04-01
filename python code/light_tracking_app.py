@@ -16,7 +16,7 @@ class VideoApp:
         self.label.pack()
         
         # OpenCV Video Capture. Change this to 1 for USB camera
-        self.cap = cv2.VideoCapture(0)
+        self.cap = cv2.VideoCapture(1)
         
         # Buttons
         self.button_frame = tk.Frame(self.root)
@@ -143,9 +143,9 @@ class VideoApp:
 def light_tracker(self):
 
     # Parameters
-    threshold_bright = 245  # Brightness threshold for bright regions
+    threshold_bright = 220  # Brightness threshold for bright regions
     threshold_dark = 150     # Threshold for dark regions
-    max_bright_area = 200   # Maximum area for small bright contours
+    max_bright_area = 800   # Maximum area for small bright contours
     min_dark_area = 10000    # Minimum area for dark contours to be considered
 
     #if not cap.isOpened():
@@ -249,7 +249,7 @@ def send_coord(xValue, yValue):
 if __name__ == "__main__":
     print("hello world")
     # Configure the serial connection
-    #arduino = serial.Serial(port='COM4', baudrate=38400, timeout=1)  # Change 'COM3' to your Arduino's port
+    arduino = serial.Serial(port='COM5', baudrate=38400, timeout=1)  # Change 'COM3' to your Arduino's port
     time.sleep(2)  # Allow time for connection to establish
 
     root = tk.Tk()
