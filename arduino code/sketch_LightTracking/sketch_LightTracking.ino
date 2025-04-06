@@ -13,6 +13,8 @@ const int stepPin1 = 3;
 const int dirPin2 = 5;
 const int stepPin2 = 2;
 int snapX = 0;
+const int snapVal = 100;
+const int snapSpeed = 5000;
 
 // Define motor interface type
 #define motorInterfaceType 1
@@ -24,8 +26,48 @@ AccelStepper myStepper2(motorInterfaceType, stepPin2, dirPin2);
 //Stepper myStepper1(stepsPerRevolution, 9, 11, 10, 8);
 //Stepper myStepper2(stepsPerRevolution, 5, 7, 6, 4);
 
-void makeSnapX(AccelStepper myStepper, ) {
-    
+void fastMove(AccelStepper myStepper, int snapVal, int snapSpeed){
+    int oldSpeed = myStepper.speed();
+
+    myStepper.setSpeed(snapSpeed);
+    stepper.move(snapVal);
+    while (myStepper.runSpeedToPosition());
+    stepper.runToNewPosition(0); // Cause an overshoot then back to 0
+
+    myStepper.setSpeed(oldSpeed)
+}
+
+int makeSnapX(AccelStepper myStepper, int x) {
+    // check if switching from -x to x or vice versa, fast move
+    if (x == 0){ 
+        return snapX;
+    }
+
+    switch (snapX) {
+        case 1:
+            if (x > 0) {
+                return snapX;
+            } else {
+                fastMove(myStepper, snapVal, snapSpeed);
+                return -1;
+            }
+            break;
+        case -1:
+            if (x < 0) {
+                return snapX;
+            } else {
+                fastMove(myStepper, -snapVal, snapSpeed);
+                return 1;
+            }
+            break;
+        case 0:
+            if (x > 0) {
+                return 1;
+            }
+            else{
+                return -1;
+            }
+    }
 }
 
 void setup() {
