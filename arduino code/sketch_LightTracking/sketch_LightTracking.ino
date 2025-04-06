@@ -48,6 +48,7 @@ int makeSnapX(AccelStepper myStepper, int x) {
                 return snapX;
             } else {
                 fastMove(myStepper, snapVal, snapSpeed);
+                Serial.println("snapped!");
                 return -1;
             }
             break;
@@ -56,6 +57,7 @@ int makeSnapX(AccelStepper myStepper, int x) {
                 return snapX;
             } else {
                 fastMove(myStepper, -snapVal, snapSpeed);
+                Serial.println("snapped! ");
                 return 1;
             }
             break;
