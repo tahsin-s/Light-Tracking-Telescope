@@ -33,7 +33,7 @@ void fastMove(AccelStepper myStepper, int snapVal, int snapSpeed){
     myStepper.move(snapVal);
     while (myStepper.runSpeedToPosition());
 
-    myStepper.setSpeed(oldSpeed)
+    myStepper.setSpeed(oldSpeed);
 }
 
 int makeSnapX(AccelStepper myStepper, int x) {
