@@ -12,6 +12,7 @@ const int dirPin1 = 6;
 const int stepPin1 = 3;
 const int dirPin2 = 5;
 const int stepPin2 = 2;
+int snapX = 0;
 
 // Define motor interface type
 #define motorInterfaceType 1
@@ -22,6 +23,10 @@ AccelStepper myStepper2(motorInterfaceType, stepPin2, dirPin2);
 
 //Stepper myStepper1(stepsPerRevolution, 9, 11, 10, 8);
 //Stepper myStepper2(stepsPerRevolution, 5, 7, 6, 4);
+
+void makeSnapX(AccelStepper myStepper, ) {
+    
+}
 
 void setup() {
     Serial.begin(38400); // Start serial communication
@@ -65,6 +70,7 @@ void loop() {
             //myStepper2.setSpeed(-speedY);
 
             // set where to move the thing.
+            snapX = makeSnapX(myStepper1, x);
             myStepper1.move(x);
             myStepper2.move(-y);
 
