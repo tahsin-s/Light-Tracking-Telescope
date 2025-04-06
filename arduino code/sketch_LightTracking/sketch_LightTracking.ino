@@ -30,9 +30,8 @@ void fastMove(AccelStepper myStepper, int snapVal, int snapSpeed){
     int oldSpeed = myStepper.speed();
 
     myStepper.setSpeed(snapSpeed);
-    stepper.move(snapVal);
+    myStepper.move(snapVal);
     while (myStepper.runSpeedToPosition());
-    stepper.runToNewPosition(0); // Cause an overshoot then back to 0
 
     myStepper.setSpeed(oldSpeed)
 }
