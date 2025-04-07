@@ -143,7 +143,7 @@ class VideoApp:
 def light_tracker(self):
 
     # Parameters
-    threshold_bright = 220  # Brightness threshold for bright regions
+    threshold_bright = 200  # Brightness threshold for bright regions
     threshold_dark = 150     # Threshold for dark regions
     max_bright_area = 800   # Maximum area for small bright contours
     min_dark_area = 10000    # Minimum area for dark contours to be considered
