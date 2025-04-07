@@ -13,7 +13,7 @@ const int stepPin1 = 3;
 const int dirPin2 = 5;
 const int stepPin2 = 2;
 int snapX = 0;
-const int snapVal = 100;
+const int snapVal = 1000;
 const int snapSpeed = 5000;
 
 // Define motor interface type
@@ -26,12 +26,15 @@ AccelStepper myStepper2(motorInterfaceType, stepPin2, dirPin2);
 //Stepper myStepper1(stepsPerRevolution, 9, 11, 10, 8);
 //Stepper myStepper2(stepsPerRevolution, 5, 7, 6, 4);
 
-void fastMove(AccelStepper myStepper, int snapVal, int snapSpeed){
+void fastMove(AccelStepper myStepper, int snapVal, int speed){
     int oldSpeed = myStepper.speed();
-
-    myStepper.setSpeed(snapSpeed);
+    myStepper.setMaxSpeed(speed);
+    myStepper.setSpeed(speed);
     myStepper.move(snapVal);
-    while (myStepper.runSpeedToPosition());
+
+    while (myStepper.isRunning()){
+        myStepper.run();
+    }
 
     myStepper.setSpeed(oldSpeed);
 }
@@ -47,7 +50,7 @@ int makeSnapX(AccelStepper myStepper, int x) {
             if (x > 0) {
                 return snapX;
             } else {
-                fastMove(myStepper, snapVal, snapSpeed);
+                fastMove(myStepper, -snapVal, snapSpeed);
                 Serial.println("snapped!");
                 return -1;
             }
@@ -56,7 +59,7 @@ int makeSnapX(AccelStepper myStepper, int x) {
             if (x < 0) {
                 return snapX;
             } else {
-                fastMove(myStepper, -snapVal, snapSpeed);
+                fastMove(myStepper, snapVal, snapSpeed);
                 Serial.println("snapped! ");
                 return 1;
             }
@@ -103,9 +106,9 @@ void loop() {
             int y = data.substring(commaIndex + 1).toInt();
 
             // set the speeds to the values send from serial. Map the speeds and make sure they are positive.
-            x = map(x, -1500, 1500, -30, 30);
+            x = map(x, -1500, 1500, -20, 20);
             //speedX = abs(speedX);
-            y = map(y, -1000, 1000, -10, 10);
+            y = map(y, -1000, 1000, -5, 5);
             //speedY = abs(speedY);
 
             // actually set the speeds.
@@ -113,7 +116,7 @@ void loop() {
             //myStepper2.setSpeed(-speedY);
 
             // set where to move the thing.
-            snapX = makeSnapX(myStepper1, x);
+            // snapX = makeSnapX(myStepper1, x);
             myStepper1.move(x);
             myStepper2.move(-y);
 
